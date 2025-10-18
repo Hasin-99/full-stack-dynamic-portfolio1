@@ -6,9 +6,10 @@
 </head>
 <body>
     @include('partials.header')
-    @include('partials.sidebar'
+    @include('partials.sidebar')
     
-    @yeild('content')
+    @yield('content')
+
     @include('partials.footer')
 </body>
 </html>

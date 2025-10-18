@@ -2,6 +2,9 @@
 
 @section('content')
     <h1>
-        Hello this is professional laravel
+        This is homepage.
     </h1>
+    <a href="/skills">
+        Go to Skills Page
+    </a>
 @endsection
