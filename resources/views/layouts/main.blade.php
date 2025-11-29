@@ -7,7 +7,7 @@
 <body>
     @include('partials.header')
     @include('partials.sidebar')
-    
+     <div style="margin-top:68px">
     @yield('content')
 
     @include('partials.footer')
