@@ -1,58 +1,46 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http;
 
-use App\Http\Controllers\Controller;
-use App\Models\Skill;
-use Illuminate\Http\Request;
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
-class SkillController extends Controller
+class Kernel extends HttpKernel
 {
-    public function index()
-    {
-        $skills = Skill::orderBy('order')->get();
-        return view('admin.skills.index', compact('skills'));
-    }
+    protected $middleware = [
+        \App\Http\Middleware\TrustProxies::class,
+        \Illuminate\Http\Middleware\HandleCors::class,
+        \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
+        \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
+        \App\Http\Middleware\TrimStrings::class,
+        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+    ];
 
-    public function create()
-    {
-        return view('admin.skills.create');
-    }
+    protected $middlewareGroups = [
+        'web' => [
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \App\Http\Middleware\VerifyCsrfToken::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ],
 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'icon' => 'nullable|string|max:255',
-            'order' => 'nullable|integer',
-        ]);
+        'api' => [
+            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ],
+    ];
 
-        Skill::create($validated);
-        return redirect()->route('admin.skills.index')->with('success', 'Skill created successfully!');
-    }
-
-    public function edit(Skill $skill)
-    {
-        return view('admin.skills.edit', compact('skill'));
-    }
-
-    public function update(Request $request, Skill $skill)
-    {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'icon' => 'nullable|string|max:255',
-            'order' => 'nullable|integer',
-        ]);
-
-        $skill->update($validated);
-        return redirect()->route('admin.skills.index')->with('success', 'Skill updated successfully!');
-    }
-
-    public function destroy(Skill $skill)
-    {
-        $skill->delete();
-        return redirect()->route('admin.skills.index')->with('success', 'Skill deleted successfully!');
-    }
+    protected $middlewareAliases = [
+        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
+        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+        'can' => \Illuminate\Auth\Middleware\Authorize::class,
+        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
+        'signed' => \App\Http\Middleware\ValidateSignature::class,
+        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+    ];
 }
