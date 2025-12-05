@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Md Julfikar Hasan - Portfolio')</title>
+    <title>@yield('title', 'Md. Shadman Hasin - Portfolio')</title>
     @stack('styles')
 </head>
 <body>
     <header>
         <div class="logo">
-            <span class="logo-text">JULFIKAR</span>
+            <span class="logo-text">HASIN</span>
             <span class="logo-dot"></span>
         </div>
         <nav>
@@ -21,7 +21,7 @@
             </ul>
         </nav>
         @php
-            $resumePath = isset($settings['resume_file']) ? (str_starts_with($settings['resume_file'], 'storage/') ? asset($settings['resume_file']) : asset('storage/' . $settings['resume_file'])) : asset('assets/Md_Julfikar_Hasan_CV.pdf');
+            $resumePath = isset($settings['resume_file']) ? (str_starts_with($settings['resume_file'], 'storage/') ? asset($settings['resume_file']) : asset('storage/' . $settings['resume_file'])) : asset('assets/Md.Shadman_Hasin_CV.pdf');
         @endphp
         <a href="{{ $resumePath }}" class="resume-btn" download>My Resume</a>
     </header>
